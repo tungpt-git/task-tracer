@@ -1,11 +1,13 @@
 package com.example.task_racer.model.dto;
 
-import lombok.Data;
 import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder
-public class CreateTaskDto {
+public class CreateTaskResponseDto {
+
+    private String id;
 
     private String title;
 
