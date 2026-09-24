@@ -34,6 +34,7 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<CreateTaskResponseDto> createTask(@RequestBody CreateTaskDto createTaskDto) {
+        System.out.println("==createTaskDto: " + createTaskDto);
         CreateTaskResponseDto createTaskResponseDto = taskService.createTask(createTaskDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createTaskResponseDto);

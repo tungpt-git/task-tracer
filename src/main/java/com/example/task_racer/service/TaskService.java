@@ -6,6 +6,7 @@ import com.example.task_racer.model.dto.CreateTaskDto;
 import com.example.task_racer.model.dto.UpdateTaskDto;
 import com.example.task_racer.model.dto.UpdateTaskResponseDto;
 import com.example.task_racer.model.dto.CreateTaskResponseDto;
+import com.example.task_racer.exception.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -14,7 +15,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class TaskService {
 
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
+
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
@@ -47,7 +52,7 @@ public class TaskService {
 
     public UpdateTaskResponseDto updateTask(Long id, UpdateTaskDto updateTaskDto) {
         Task existingTask = taskRepository.findById(id.toString())
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
 
         existingTask.setTitle(updateTaskDto.getTitle());
         existingTask.setDescription(updateTaskDto.getDescription());
